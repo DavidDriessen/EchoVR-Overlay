@@ -43,6 +43,7 @@ export default class Players extends Vue {
 }
 </script>
 
+<!--suppress CssUnusedSymbol -->
 <style scoped lang="scss">
 $orange: rgba(230, 96, 0, 0.9);
 $blue: rgba(72, 142, 231, 0.9);

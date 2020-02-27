@@ -6,7 +6,7 @@
     <div class="body">
       <span v-show="!assistScored">Scored by</span>
       <h3>{{ scored.personScored.name }}</h3>
-      <h7 v-if="assistScored">ASSISTED BY {{ assistScored }}</h7>
+      <h6 v-if="assistScored">ASSISTED BY {{ assistScored }}</h6>
     </div>
     <div class="footer">
       {{ discSpeed | round(2) }} m/s - {{ scored.distanceThrown | round(2) }} m
@@ -33,6 +33,7 @@ export default class Scored extends Vue {
   @Prop() private scored!: ScoredType;
   discSpeed = 0.54587354;
   assistScored = "";
+  // noinspection JSUnusedGlobalSymbols
   beforeMount() {
     if (this.scored) {
       this.discSpeed = this.scored.discSpeed;

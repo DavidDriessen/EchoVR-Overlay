@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownAttribute -->
 <template
   ><svg
     xmlns:dc="http://purl.org/dc/elements/1.1/"

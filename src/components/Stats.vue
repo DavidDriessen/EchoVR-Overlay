@@ -55,7 +55,7 @@ export default class Stats extends Vue {
   color: white;
   border-collapse: collapse;
   tr {
-    background-image: url("~@/assets/Echo states overlay.svg");
+    background-image: url("../assets/Echo states overlay.svg");
     height: 70px;
     td {
       width: 300px;

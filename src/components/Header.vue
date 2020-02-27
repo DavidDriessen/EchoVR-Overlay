@@ -24,12 +24,12 @@ export default class Header extends Vue {
 <style scoped lang="scss">
 header {
   position: relative;
-  top: 0px;
+  top: 0;
   height: 90px;
   width: 700px;
   text-align: center;
   margin: auto;
-  background-image: url("~@/assets/Echo score overlay.svg");
+  background-image: url("../assets/Echo score overlay.svg");
   background-size: contain;
   color: white;
   font-size: 30px;

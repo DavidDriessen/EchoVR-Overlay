@@ -19,6 +19,16 @@
       :orange-stats.sync="gameData.orange.stats"
     ></Stats>
     <Scored v-if="show.goal" :scored.sync="gameData.lastScore"></Scored>
+    <MiniMap
+      v-show="show.header && !show.stats"
+      :blue="gameData.blue.players"
+      :orange="gameData.orange.players"
+    ></MiniMap>
+    <ScoreBoard
+      v-if="show.stats"
+      :blue="gameData.blue.players"
+      :orange="gameData.orange.players"
+    ></ScoreBoard>
   </div>
 </template>
 
@@ -30,9 +40,13 @@ import Stats from "@/components/Stats.vue";
 import Scored from "@/components/Scored.vue";
 import { DataType } from "@/dataTypes";
 import Players from "@/components/Players.vue";
+import MiniMap from "@/components/MiniMap.vue";
+import ScoreBoard from "@/components/ScoreBoard.vue";
 
 @Component({
   components: {
+    ScoreBoard,
+    MiniMap,
     Players,
     Header,
     Stats,
@@ -43,7 +57,8 @@ import Players from "@/components/Players.vue";
 export default class App extends Vue {
   gameData = {} as DataType;
   show = { stats: false, header: true, goal: false };
-  options = {};
+  options = { liveTest: false, orange: "", blue: "" };
+  // noinspection JSUnusedGlobalSymbols
   beforeMount() {
     this.options = this.parseParams();
     this.gameData = new DataType();
@@ -55,13 +70,14 @@ export default class App extends Vue {
     let call;
     if (process.env.NODE_ENV == "production")
       call = axios.get("http://127.0.0.1/session");
-    // else call = axios.get("/session");
+    else if (this.options.liveTest) call = axios.get("/session");
     else call = axios.get("/test-data.json");
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     call
       .then(response => {
         this.gameData = new DataType(response.data);
-        if (process.env.NODE_ENV == "production") this.fetch();
+        if (process.env.NODE_ENV == "production" || this.options.liveTest)
+          this.fetch();
         // setTimeout(this.fetch, 1000);
       })
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -72,20 +88,26 @@ export default class App extends Vue {
               // In lobby
               this.gameData.gameState = "lobby";
               break;
+            case 500:
+              // Error in api
+              this.gameData.gameState = "error";
+              console.log(error);
+              break;
             default:
               // Something went wrong.
               this.gameData.gameState = "error";
+              console.error(error);
           }
         } else {
           // Game not running
           this.gameData.gameState = "offline";
         }
-        if (process.env.NODE_ENV == "production") this.fetch();
+        if (process.env.NODE_ENV == "production" || this.options.liveTest)
+          this.fetch();
       });
   }
 
   @Watch("gameData.gameState")
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   onChangedGameState(value: string, oldValue: string) {
     switch (value) {
       case "error":
@@ -94,8 +116,6 @@ export default class App extends Vue {
         this.show.header = false;
         this.show.goal = false;
         this.show.stats = false;
-        break;
-      case "":
         break;
       case "pre_match":
         this.show.header = false;
@@ -122,7 +142,14 @@ export default class App extends Vue {
         this.show.goal = false;
         this.show.stats = false;
         break;
-      default:
+      case "":
+        switch (oldValue) {
+          case "score":
+            break;
+          case "pre_match":
+            break;
+        }
+        break;
     }
   }
   parseParams() {
@@ -142,7 +169,7 @@ export default class App extends Vue {
 
 <style lang="scss">
 #app {
-  /*background: gray;*/
+  background: gray;
   font-family: Bahnschrift, serif;
   position: fixed;
   width: 100%;
