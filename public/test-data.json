@@ -1,0 +1,125 @@
+{
+  "disc": {
+    "position": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "velocity": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "bounce_count": 0
+  },
+  "sessionid": "758FD71D-CA4C-4DE4-B40A-712E1ECCA7C0",
+  "orange_points": 2,
+  "private_match": true,
+  "client_name": "DavidDual",
+  "game_clock_display": "10:00.00",
+  "game_status": "score",
+  "game_clock": 600.0,
+  "match_type": "Echo_Arena_Private",
+  "teams": [
+    {
+      "players": [
+        {
+          "name": "DavidDual",
+          "rhand": [
+            0.16900001,
+            -2.7700002,
+            -77.789001
+          ],
+          "playerid": 0,
+          "position": [
+            0.068000004,
+            -2.368,
+            -78.058006
+          ],
+          "lhand": [
+            0.16000001,
+            -2.7650001,
+            -77.925003
+          ],
+          "userid": 1412248302177961,
+          "stats": {
+            "possession_time": 0.0,
+            "points": 0,
+            "saves": 0,
+            "goals": 0,
+            "stuns": 0,
+            "passes": 0,
+            "catches": 0,
+            "steals": 0,
+            "blocks": 0,
+            "interceptions": 0,
+            "assists": 0,
+            "shots_taken": 0
+          },
+          "number": 56,
+          "level": 50,
+          "possession": true,
+          "left": [
+            0.98300004,
+            0.10700001,
+            -0.15100001
+          ],
+          "invulnerable": false,
+          "up": [
+            0.14600001,
+            0.052000001,
+            0.98800004
+          ],
+          "forward": [
+            0.11300001,
+            -0.99300003,
+            0.036000002
+          ],
+          "stunned": false,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "blocking": false
+        }
+      ],
+      "team": "BLUE TEAM",
+      "possession": false,
+      "stats": {
+        "possession_time": 0.0,
+        "points": 0,
+        "goals": 0,
+        "saves": 0,
+        "stuns": 0,
+        "interceptions": 0,
+        "blocks": 0,
+        "passes": 0,
+        "catches": 0,
+        "steals": 0,
+        "assists": 0,
+        "shots_taken": 0
+      }
+    },
+    {
+      "team": "ORANGE TEAM",
+      "possession": false
+    }
+  ],
+  "map_name": "mpl_arena_a",
+  "possession": [
+    -1,
+    -1
+  ],
+  "tournament_match": false,
+  "blue_points": 0,
+  "last_score": {
+    "disc_speed": 0.0,
+    "team": "orange",
+    "goal_type": "LONG SHOT",
+    "point_amount": 0,
+    "distance_thrown": 0.0,
+    "person_scored": "DavidDual",
+    "assist_scored": "DaviddDual"
+  }
+}
