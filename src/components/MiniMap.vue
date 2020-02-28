@@ -12,8 +12,12 @@
       :key="player.number"
       class="player orange"
       :style="{
-        top: (player.position.z + 440 / 2) * size + 'px',
-        left: (player.position.x + 1920 / 2) * size + 'px'
+        top:
+          ((player.position.x / 15) * (430 * size) + 440 / 2) * size - 5 + 'px',
+        right:
+          ((player.position.z / 80) * (1920 * size) + 1920 / 2) * size -
+          5 +
+          'px'
       }"
     >
       {{ player.number }}
@@ -23,8 +27,12 @@
       :key="player.number"
       class="player blue"
       :style="{
-        top: (player.position.z + 440 / 2) * size + 'px',
-        left: (player.position.x + 1920 / 2) * size + 'px'
+        top:
+          ((player.position.x / 15) * (430 * size) + 440 / 2) * size - 5 + 'px',
+        right:
+          ((player.position.z / 80) * (1920 * size) + 1920 / 2) * size -
+          5 +
+          'px'
       }"
     >
       {{ player.number }}
@@ -40,7 +48,7 @@ import { PlayerType } from "@/dataTypes";
 export default class MiniMap extends Vue {
   @Prop() private blue!: Array<PlayerType>;
   @Prop() private orange!: Array<PlayerType>;
-  @Prop() private size = 0.4;
+  @Prop() public size!: number;
 }
 </script>
 
@@ -65,9 +73,11 @@ export default class MiniMap extends Vue {
 }
 .map {
   position: fixed;
-  bottom: 10px;
-  right: 10px;
+  bottom: 0;
+  right: 0;
   background-image: url("../assets/map.jpg");
   background-size: cover;
+  color: white;
+  font-size: 25px;
 }
 </style>

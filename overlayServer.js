@@ -23,6 +23,7 @@ router.get("/*", function(req, res) {
   axios
     .get("http://localhost:8080" + req.url)
     .then(response => {
+      res.setHeader("Content-Type", response.headers["Content-Type"]);
       res.send(response.data);
     })
     .catch(() => {

@@ -10,8 +10,8 @@
     ></Header>
     <Players
       v-show="show.header"
-      :blue="gameData.blue.players"
-      :orange="gameData.orange.players"
+      :blue.sync="gameData.blue.players"
+      :orange.sync="gameData.orange.players"
     ></Players>
     <Stats
       v-if="show.stats"
@@ -20,14 +20,16 @@
     ></Stats>
     <Scored v-if="show.goal" :scored.sync="gameData.lastScore"></Scored>
     <MiniMap
+      v-if="options.miniMap"
       v-show="show.header && !show.stats"
-      :blue="gameData.blue.players"
-      :orange="gameData.orange.players"
+      :blue.sync="gameData.blue.players"
+      :orange.sync="gameData.orange.players"
+      size="0.5"
     ></MiniMap>
     <ScoreBoard
       v-if="show.stats"
-      :blue="gameData.blue.players"
-      :orange="gameData.orange.players"
+      :blue.sync="gameData.blue.players"
+      :orange.sync="gameData.orange.players"
     ></ScoreBoard>
   </div>
 </template>
@@ -57,10 +59,10 @@ import ScoreBoard from "@/components/ScoreBoard.vue";
 export default class App extends Vue {
   gameData = {} as DataType;
   show = { stats: false, header: true, goal: false };
-  options = { liveTest: false, orange: "", blue: "" };
+  options = { liveTest: false, orange: "", blue: "", miniMap: true };
   // noinspection JSUnusedGlobalSymbols
   beforeMount() {
-    this.options = this.parseParams();
+    // this.options = this.parseParams();
     this.gameData = new DataType();
     this.fetch();
     // setInterval(this.fetch, 3000);
@@ -169,7 +171,7 @@ export default class App extends Vue {
 
 <style lang="scss">
 #app {
-  background: gray;
+  /*background: gray;*/
   font-family: Bahnschrift, serif;
   position: fixed;
   width: 100%;
