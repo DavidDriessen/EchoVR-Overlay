@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const axios = require("axios");
 const port = 88;
-const path = __dirname + "/";
+// const path = __dirname + "/";
 
 app.listen(port, function() {
   console.log("Example app listening on port " + port + "!");
@@ -15,7 +15,7 @@ router.get("/session", function(req, res) {
     .then(response => {
       res.json(response.data);
     })
-    .catch(error => {
+    .catch(() => {
       res.status(404).json({});
     });
 });

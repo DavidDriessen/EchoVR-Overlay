@@ -24,7 +24,8 @@
       v-show="show.header && !show.stats"
       :blue.sync="gameData.blue.players"
       :orange.sync="gameData.orange.players"
-      size="0.5"
+      :size="options.mapSize"
+      :location="options.mapPos"
     ></MiniMap>
     <ScoreBoard
       v-if="show.stats"
@@ -59,13 +60,19 @@ import ScoreBoard from "@/components/ScoreBoard.vue";
 export default class App extends Vue {
   gameData = {} as DataType;
   show = { stats: false, header: true, goal: false };
-  options = { liveTest: false, orange: "", blue: "", miniMap: true };
+  options = {
+    liveTest: false,
+    orange: "",
+    blue: "",
+    miniMap: false,
+    mapSize: 0.5,
+    mapPos: "br"
+  };
   // noinspection JSUnusedGlobalSymbols
   beforeMount() {
-    // this.options = this.parseParams();
+    this.parseParams();
     this.gameData = new DataType();
     this.fetch();
-    // setInterval(this.fetch, 3000);
   }
 
   fetch() {
@@ -80,7 +87,6 @@ export default class App extends Vue {
         this.gameData = new DataType(response.data);
         if (process.env.NODE_ENV == "production" || this.options.liveTest)
           this.fetch();
-        // setTimeout(this.fetch, 1000);
       })
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       .catch((error: any) => {
@@ -156,15 +162,32 @@ export default class App extends Vue {
   }
   parseParams() {
     if (window.location.search === "") return {};
-    return JSON.parse(
-      '{"' +
-        decodeURIComponent(window.location.search)
-          .slice(1)
-          .split("&")
-          .map(i => i.split("=").join('":"'))
-          .join('","') +
-        '"}'
-    );
+    decodeURIComponent(window.location.search)
+      .slice(1)
+      .split("&")
+      .map(i => {
+        const o = i.split("=");
+        switch (o[0]) {
+          case "blue":
+            this.options.blue = o[1];
+            break;
+          case "orange":
+            this.options.orange = o[1];
+            break;
+          case "liveTest":
+            this.options.liveTest = true;
+            break;
+          case "miniMap":
+            this.options.miniMap = true;
+            break;
+          case "mapSize":
+            this.options.mapSize = parseFloat(o[1]);
+            break;
+          case "mapPos":
+            if (["br", "bl"].indexOf(o[1]) >= 0) this.options.mapPos = o[1];
+            break;
+        }
+      });
   }
 }
 </script>

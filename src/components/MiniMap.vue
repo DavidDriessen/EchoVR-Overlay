@@ -1,24 +1,17 @@
 <template>
   <div
-    class="map"
+    :class="'map ' + location"
     :style="{
-      width: 1920 * size + 'px',
-      height: 440 * size + 'px',
-      'background-position-y': -120 * size + 'px'
+      width: width + 'px',
+      height: height + 'px',
+      'background-position-y': -140 * size + 'px'
     }"
   >
     <div
       v-for="player in orange"
       :key="player.number"
       class="player orange"
-      :style="{
-        top:
-          ((player.position.x / 15) * (430 * size) + 440 / 2) * size - 5 + 'px',
-        right:
-          ((player.position.z / 80) * (1920 * size) + 1920 / 2) * size -
-          5 +
-          'px'
-      }"
+      :style="calcPosition(player.position)"
     >
       {{ player.number }}
     </div>
@@ -26,14 +19,7 @@
       v-for="player in blue"
       :key="player.number"
       class="player blue"
-      :style="{
-        top:
-          ((player.position.x / 15) * (430 * size) + 440 / 2) * size - 5 + 'px',
-        right:
-          ((player.position.z / 80) * (1920 * size) + 1920 / 2) * size -
-          5 +
-          'px'
-      }"
+      :style="calcPosition(player.position)"
     >
       {{ player.number }}
     </div>
@@ -42,13 +28,35 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
-import { PlayerType } from "@/dataTypes";
+import { Coordinates, PlayerType } from "@/dataTypes";
 
-@Component({})
+@Component
 export default class MiniMap extends Vue {
   @Prop() private blue!: Array<PlayerType>;
   @Prop() private orange!: Array<PlayerType>;
   @Prop() public size!: number;
+  @Prop() public location!: string;
+  get height() {
+    return 400 * this.size;
+  }
+  get width() {
+    return 1920 * this.size;
+  }
+  calcPosition(position: Coordinates) {
+    const boxSize = 11;
+    return {
+      top:
+        (position.x / 15) * (this.height / 2) +
+        this.height / 2 -
+        boxSize / 2 +
+        "px",
+      right:
+        (position.z / 80) * (this.width / 2) +
+        this.width / 2 -
+        boxSize / 2 +
+        "px"
+    };
+  }
 }
 </script>
 
@@ -73,11 +81,17 @@ export default class MiniMap extends Vue {
 }
 .map {
   position: fixed;
-  bottom: 0;
-  right: 0;
   background-image: url("../assets/map.jpg");
   background-size: cover;
   color: white;
   font-size: 25px;
+}
+.br {
+  bottom: 0;
+  right: 0;
+}
+.bl {
+  bottom: 0;
+  left: 0;
 }
 </style>
