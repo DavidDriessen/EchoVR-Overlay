@@ -1,24 +1,32 @@
-# echo_stream
+# EchoVR-Overlay
 
-## Project setup
+## Build from source
 ```
+git clone https://github.com/DavidDriessen/EchoVR-Overlay.git
+cd EchoVR-Overlay
 npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
 npm run build
 ```
 
-### Lints and fixes files
-```
-npm run lint
-```
+## Usage
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+Put `file:///C/location/of/build/index.html` in a browser component of OBS.
+
+For options append the link with `?` and the options you want.
+Separate the options with `&`.
+
+For example: `file:///C/location/of/build/index.html?miniMap&mapSize=0.5`.
+
+### Options
+- #### miniMap
+    Enable mini-map.
+- #### mapSize
+    Sets the size of the mini-map. Example: `0.3`.
+- #### mapPos
+    Sets the position of the mini-map. Available values are:
+    - `bl` Bottom Left.
+    - `br` Bottom Right. Default
+- #### blue
+    Name of the blue team.
+- #### orange
+    Name of the orange team.
