@@ -5,11 +5,13 @@ export class StatsType {
   stuns: number;
   passes: number;
   assists: number;
+  points: number;
 
   constructor(data: API.StatsType | undefined) {
     if (data) {
       this.possessionTime = Math.round(data.possession_time);
       this.shotsTaken = data.shots_taken;
+      this.points = data.points;
       this.saves = data.saves;
       this.stuns = data.stuns;
       this.passes = data.passes;
@@ -17,6 +19,7 @@ export class StatsType {
     } else {
       this.possessionTime = 0;
       this.shotsTaken = 0;
+      this.points = 0;
       this.saves = 0;
       this.stuns = 0;
       this.passes = 0;
@@ -31,9 +34,15 @@ export class Coordinates {
   z: number;
 
   constructor(data: Array<number>) {
-    this.x = data[0];
-    this.y = data[1];
-    this.z = data[2];
+    if (data && data.length == 3) {
+      this.x = data[0];
+      this.y = data[1];
+      this.z = data[2];
+    } else {
+      this.x = 0;
+      this.y = 0;
+      this.z = 0;
+    }
   }
 }
 
@@ -91,17 +100,30 @@ export interface ScoredType {
   assistScored: PlayerType | undefined;
 }
 
+export class DiscType {
+  position: Coordinates;
+  velocity: Coordinates;
+  bounceCount: number;
+  constructor(data: API.DiscType) {
+    this.position = new Coordinates(data.position);
+    this.velocity = new Coordinates(data.velocity);
+    this.bounceCount = data.bounce_count;
+  }
+}
+
 export class DataType {
   gameTime: string;
   gameState: string;
   blue: TeamType;
   orange: TeamType;
   lastScore: ScoredType;
+  disc: DiscType;
 
   constructor(data: API.DataType | undefined = undefined) {
     if (data) {
       this.gameTime = data.game_clock_display;
       this.gameState = data.game_status;
+      this.disc = new DiscType(data.disc);
       this.blue = new TeamType(data.teams[0], data.blue_points, "blue");
       this.orange = new TeamType(data.teams[1], data.orange_points, "orange");
       if (data.last_score.goal_type == "[NO GOAL]") {
@@ -125,6 +147,7 @@ export class DataType {
     } else {
       this.gameTime = "00:00";
       this.gameState = "";
+      this.disc = new DiscType({} as API.DiscType);
       this.blue = new TeamType({} as API.TeamType, 0, "blue");
       this.orange = new TeamType({} as API.TeamType, 0, "orange");
       this.lastScore = {} as ScoredType;

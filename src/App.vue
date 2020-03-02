@@ -24,11 +24,13 @@
       v-show="show.header && !show.stats"
       :blue.sync="gameData.blue.players"
       :orange.sync="gameData.orange.players"
+      :disc.sync="gameData.disc"
       :size="options.mapSize"
       :location="options.mapPos"
     ></MiniMap>
     <ScoreBoard
-      v-if="show.stats"
+      v-if="options.scoreboard"
+      v-show="show.stats"
       :blue.sync="gameData.blue.players"
       :orange.sync="gameData.orange.players"
     ></ScoreBoard>
@@ -66,10 +68,14 @@ export default class App extends Vue {
     blue: "",
     miniMap: false,
     mapSize: 0.5,
-    mapPos: "br"
+    mapPos: "br",
+    scoreboard: false
   };
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  conf: any;
   // noinspection JSUnusedGlobalSymbols
   beforeMount() {
+    if (this.conf) this.options = this.conf;
     this.parseParams();
     this.gameData = new DataType();
     this.fetch();
@@ -176,6 +182,9 @@ export default class App extends Vue {
             break;
           case "liveTest":
             this.options.liveTest = true;
+            break;
+          case "scoreboard":
+            this.options.scoreboard = true;
             break;
           case "miniMap":
             this.options.miniMap = true;

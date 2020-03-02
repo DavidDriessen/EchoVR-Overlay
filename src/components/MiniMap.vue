@@ -23,17 +23,22 @@
     >
       {{ player.number }}
     </div>
+    <echo-icon class="disc" :style="calcPosition(disc.position, 20)">
+    </echo-icon>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
-import { Coordinates, PlayerType } from "@/dataTypes";
-
-@Component
+import { Coordinates, PlayerType, DiscType } from "@/dataTypes";
+import EchoIcon from "@/components/EchoIcon.vue";
+@Component({
+  components: { EchoIcon }
+})
 export default class MiniMap extends Vue {
   @Prop() private blue!: Array<PlayerType>;
   @Prop() private orange!: Array<PlayerType>;
+  @Prop() private disc!: DiscType;
   @Prop() public size!: number;
   @Prop() public location!: string;
   get height() {
@@ -42,8 +47,7 @@ export default class MiniMap extends Vue {
   get width() {
     return 1920 * this.size;
   }
-  calcPosition(position: Coordinates) {
-    const boxSize = 11;
+  calcPosition(position: Coordinates, boxSize = 12) {
     return {
       top:
         (position.x / 15) * (this.height / 2) +
@@ -61,6 +65,11 @@ export default class MiniMap extends Vue {
 </script>
 
 <style scoped lang="scss">
+.disc {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+}
 .player {
   border: white solid 1px;
   border-radius: 5px;

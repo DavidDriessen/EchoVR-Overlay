@@ -1,6 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-namespace, @typescript-eslint/no-unused-vars
 namespace API {
   export interface StatsType {
+    points: number;
     possession_time: number;
     shots_taken: number;
     saves: number;
@@ -37,6 +38,11 @@ namespace API {
     person_scored: string;
     assist_scored: string;
   }
+  export interface DiscType {
+    position: Array<number>;
+    velocity: Array<number>;
+    bounce_count: number;
+  }
 
   export interface DataType {
     teams: ArrayLike<TeamType>;
@@ -45,5 +51,6 @@ namespace API {
     blue_points: number;
     orange_points: number;
     last_score: ScoredType;
+    disc: DiscType;
   }
 }
