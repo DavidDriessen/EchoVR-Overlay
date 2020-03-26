@@ -4,10 +4,15 @@ namespace API {
     points: number;
     possession_time: number;
     shots_taken: number;
+    steals: number;
     saves: number;
     stuns: number;
     passes: number;
     assists: number;
+    goals: number;
+    catches: number;
+    blocks: number;
+    interceptions: number;
   }
 
   // noinspection SpellCheckingInspection
@@ -16,14 +21,24 @@ namespace API {
     invulnerable: boolean;
     blocking: boolean;
     number: number;
+    level: number;
     playerid: number;
     name: string;
     possession: boolean;
     stats: StatsType;
     position: Array<number>;
+
+    rhand: Array<number>;
+    lhand: Array<number>;
+    left: Array<number>;
+    up: Array<number>;
+    forward: Array<number>;
+    velocity: Array<number>;
+    userid: number;
   }
 
   export interface TeamType {
+    team: string;
     players: Array<PlayerType>;
     possession: boolean;
     stats: StatsType;
@@ -45,6 +60,9 @@ namespace API {
   }
 
   export interface DataType {
+    client_name: string;
+    sessionid: string;
+    match_type: string;
     teams: ArrayLike<TeamType>;
     game_clock_display: string;
     game_status: string;
@@ -52,5 +70,7 @@ namespace API {
     orange_points: number;
     last_score: ScoredType;
     disc: DiscType;
+    private_match: boolean;
+    game_clock: number;
   }
 }

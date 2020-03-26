@@ -1,10 +1,9 @@
 <template>
   <div
-    :class="'map ' + location"
+    :class="'map ' + location + ' ' + (mapSmall ? 'map2' : 'map1')"
     :style="{
-      width: width + 'px',
-      height: height + 'px',
-      'background-position-y': -140 * size + 'px'
+      width: width / 50 + 'vw',
+      height: height / 50 + 'vw'
     }"
   >
     <div
@@ -23,7 +22,11 @@
     >
       {{ player.number }}
     </div>
-    <echo-icon class="disc" :style="calcPosition(disc.position, 20)">
+    <echo-icon
+      class="disc"
+      color="white"
+      :style="calcPosition(disc.position, 20)"
+    >
     </echo-icon>
   </div>
 </template>
@@ -41,24 +44,31 @@ export default class MiniMap extends Vue {
   @Prop() private disc!: DiscType;
   @Prop() public size!: number;
   @Prop() public location!: string;
+  @Prop() public mapSmall!: boolean;
   get height() {
-    return 400 * this.size;
+    return 2255 * 0.2 * this.size;
   }
   get width() {
-    return 1920 * this.size;
+    if (this.mapSmall) return 5591 * 0.2 * this.size;
+    else return this.fullWidth;
   }
-  calcPosition(position: Coordinates, boxSize = 12) {
+  get fullWidth() {
+    return 10780 * 0.2 * this.size;
+  }
+  calcPosition(position: Coordinates, boxSize = 14) {
     return {
       top:
-        (position.x / 15) * (this.height / 2) +
-        this.height / 2 -
+        "calc(" +
+        ((position.x / 15) * (this.height / 2) + this.height / 2) / 50 +
+        "vw - " +
         boxSize / 2 +
-        "px",
+        "px)",
       right:
-        (position.z / 80) * (this.width / 2) +
-        this.width / 2 -
+        "calc(" +
+        ((position.z / 80) * (this.fullWidth / 2) + this.width / 2) / 50 +
+        "vw - " +
         boxSize / 2 +
-        "px"
+        "px)"
     };
   }
 }
@@ -71,29 +81,33 @@ export default class MiniMap extends Vue {
   height: 20px;
 }
 .player {
-  border: white solid 1px;
-  border-radius: 5px;
-  background: black;
-  padding: 5px;
+  border-radius: 50%;
+  padding: 2px;
   font-weight: bold;
-  width: 10px;
-  height: 10px;
+  width: 14px;
+  height: 14px;
   text-align: center;
-  font-size: 10px;
+  font-size: 12px;
   position: absolute;
 }
 .orange {
-  color: rgba(230, 96, 0, 0.9);
+  background-color: rgba(230, 96, 0, 0.9);
 }
 .blue {
-  color: rgba(72, 142, 231, 0.9);
+  background-color: rgba(0, 153, 255, 0.9);
 }
 .map {
   position: fixed;
-  background-image: url("../assets/map.jpg");
   background-size: cover;
   color: white;
   font-size: 25px;
+  overflow: hidden;
+}
+.map1 {
+  background-image: url("../assets/full-map.png");
+}
+.map2 {
+  background-image: url("../assets/inner-map.png");
 }
 .br {
   bottom: 0;

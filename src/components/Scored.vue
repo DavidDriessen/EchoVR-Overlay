@@ -1,15 +1,33 @@
 <template>
   <div class="scored">
     <div class="header">
-      {{ scored.goalType }} : {{ scored.pointAmount }} Points
-    </div>
-    <div class="body">
-      <span v-show="!assistScored">Scored by</span>
-      <h3>{{ scored.personScored.name }}</h3>
-      <h6 v-if="assistScored">ASSISTED BY {{ assistScored }}</h6>
+      <h1>GOAL</h1>
+      <h3>{{ scored.goalType }} : {{ scored.pointAmount }} PTS</h3>
     </div>
     <div class="footer">
-      {{ discSpeed | round(2) }} m/s - {{ scored.distanceThrown | round(2) }} m
+      <div :class="'body ' + scored.team.color">
+        <span v-show="!assistScored">Scored by</span>
+        {{ scored.personScored.name }}
+        <br />
+        <span v-if="assistScored">ASSISTED BY {{ assistScored }}</span>
+      </div>
+      <div class="states">
+        <div class="stat">
+          <font-awesome-icon class="icon" icon="tachometer-alt" />
+          <div>{{ discSpeed | round(0) }}m/s</div>
+          <small>Disc speed</small>
+        </div>
+        <div class="stat">
+          <font-awesome-icon class="icon" icon="ruler" />
+          <div>{{ scored.distanceThrown | round(0) }}m</div>
+          <small>Throw distance</small>
+        </div>
+        <!--        <div class="stat">-->
+        <!--          <font-awesome-icon class="icon" icon="stopwatch" />-->
+        <!--          <div>00:28</div>-->
+        <!--          <small>Goal time</small>-->
+        <!--        </div>-->
+      </div>
     </div>
   </div>
 </template>
@@ -47,31 +65,72 @@ export default class Scored extends Vue {
 
 <style scoped lang="scss">
 .scored {
-  position: fixed;
-  top: 300px;
-  left: 50%;
-  width: 600px;
-  margin-left: -300px;
-  font-size: 27px;
+  text-shadow: -2px -1px black;
+  text-align: center;
   color: white;
-  border-collapse: collapse;
-  .header {
-    background: rgba(0, 0, 0, 0.71);
-    text-align: center;
-    border-radius: 30px;
-    padding: 15px;
+  & > div {
+    position: fixed;
+    left: 50%;
+    margin-left: -17vw;
+    width: 34vw;
   }
-  .body {
-    text-align: center;
-    padding: 30px;
-    font-size: 30px;
-    line-height: 45px;
+  .header {
+    top: 15vw;
+    h1 {
+      font-size: 5vw;
+      line-height: 0;
+    }
+    h3 {
+      font-size: 2vw;
+    }
   }
   .footer {
-    background: rgba(0, 0, 0, 0.71);
-    text-align: center;
-    border-radius: 30px;
-    padding: 15px;
+    bottom: 5vw;
+    font-size: 1.3vw;
+    .body {
+      padding-top: 1vw;
+      padding-bottom: 1vw;
+      margin-bottom: 0.3vw;
+      &.blue {
+        background: rgb(0, 138, 255);
+        background: linear-gradient(
+          90deg,
+          rgba(0, 138, 255, 0) 0%,
+          rgba(0, 138, 255, 1) 20%,
+          rgba(0, 138, 255, 1) 80%,
+          rgba(0, 138, 255, 0) 100%
+        );
+      }
+      &.orange {
+        background: rgb(248, 149, 15);
+        background: linear-gradient(
+          90deg,
+          rgba(248, 149, 15, 0) 0%,
+          rgba(248, 149, 15, 1) 20%,
+          rgba(248, 149, 15, 1) 80%,
+          rgba(248, 149, 15, 0) 100%
+        );
+      }
+    }
+    .stat {
+      display: inline-block;
+      background-color: rgba(0, 0, 0, 0.7);
+      border: white solid 0.2vw;
+      margin: 0.4vw;
+      width: 15vw;
+      height: 3vw;
+      padding: 0.3vw;
+      text-transform: uppercase;
+      .icon {
+        float: left;
+        margin-top: 0.5vw;
+        margin-left: 0.2vw;
+        font-size: 2vw;
+      }
+      small {
+        font-size: 0.8vw;
+      }
+    }
   }
 }
 </style>

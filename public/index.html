@@ -1,27 +1,32 @@
 <!DOCTYPE html>
 <!--suppress HtmlUnknownTarget -->
 <html lang="en">
-  <head>
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
     <title><%= htmlWebpackPlugin.options.title %></title>
     <script>window.options = {
-      liveTest: false,
-      orange: "",
-      blue: "",
-      miniMap: true,
-      mapSize: 0.5,
-      mapPos: "br",
-      scoreboard: false
+        demo: false,          // Run demo
+        orange: "",           // Team name for orange
+        blue: "",             // Team name for blue
+        miniMap: {            // Enables miniMap
+            size: 1.5,        // Sets the size of the miniMap
+            position: "br",   // Sets the position of the miniMap
+            fullMap: false    // Displays the full map
+        },
+        teamStats: true,      // Enables stats for team
+        playerStat: true,     // Enables own stats
+        playerStats: true     // Enables stats for all players
     };</script>
-  </head>
-  <body>
-    <noscript>
-      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
-    </noscript>
-    <div id="app"></div>
-    <!-- built files will be auto injected -->
-  </body>
+</head>
+<body>
+<noscript>
+    <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled.
+        Please enable it to continue.</strong>
+</noscript>
+<div id="app"></div>
+<!-- built files will be auto injected -->
+</body>
 </html>

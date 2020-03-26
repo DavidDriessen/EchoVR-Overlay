@@ -1,6 +1,7 @@
 export class StatsType {
   possessionTime: number;
   shotsTaken: number;
+  steals: number;
   saves: number;
   stuns: number;
   passes: number;
@@ -11,6 +12,7 @@ export class StatsType {
     if (data) {
       this.possessionTime = Math.round(data.possession_time);
       this.shotsTaken = data.shots_taken;
+      this.steals = data.steals;
       this.points = data.points;
       this.saves = data.saves;
       this.stuns = data.stuns;
@@ -20,6 +22,7 @@ export class StatsType {
       this.possessionTime = 0;
       this.shotsTaken = 0;
       this.points = 0;
+      this.steals = 0;
       this.saves = 0;
       this.stuns = 0;
       this.passes = 0;
@@ -56,8 +59,9 @@ export class PlayerType {
   possession: boolean;
   invulnerable: boolean;
   position: Coordinates;
+  team: TeamType;
 
-  constructor(data: API.PlayerType) {
+  constructor(data: API.PlayerType, team: TeamType) {
     this.name = data.name;
     this.number = data.number;
     this.stunned = data.stunned;
@@ -67,25 +71,28 @@ export class PlayerType {
     this.invulnerable = data.invulnerable;
     this.stats = new StatsType(data.stats);
     this.position = new Coordinates(data.position);
+    this.team = team;
   }
 }
 
 export class TeamType {
   name: string;
+  color: string;
   points: number;
   stats: StatsType;
   possession: boolean;
   players: Array<PlayerType>;
 
-  constructor(data: API.TeamType, points: number, name: string) {
-    this.name = name;
+  constructor(data: API.TeamType, points: number, color: string) {
+    this.color = color;
+    this.name = data.team;
     this.players = [];
     this.points = points;
     this.possession = data.possession;
     this.stats = new StatsType(data.stats);
     if (data.players)
       for (const player of data.players) {
-        this.players.push(new PlayerType(player));
+        this.players.push(new PlayerType(player, this));
       }
   }
 }
@@ -114,6 +121,7 @@ export class DiscType {
 export class DataType {
   gameTime: string;
   gameState: string;
+  player: PlayerType | undefined;
   blue: TeamType;
   orange: TeamType;
   lastScore: ScoredType;
@@ -126,6 +134,7 @@ export class DataType {
       this.disc = new DiscType(data.disc);
       this.blue = new TeamType(data.teams[0], data.blue_points, "blue");
       this.orange = new TeamType(data.teams[1], data.orange_points, "orange");
+      this.player = this.findMember(data.client_name);
       if (data.last_score.goal_type == "[NO GOAL]") {
         this.lastScore = {} as ScoredType;
       } else {
