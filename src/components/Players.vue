@@ -20,12 +20,8 @@
           <div class="stat">{{ player.stats.shotsTaken }}</div>
           <div class="stat">{{ player.stats.points }}</div>
         </div>
-        <div>
-          <EchoIcon
-            class="icon"
-            color="#E66000"
-            v-show="player.possession"
-          ></EchoIcon>
+        <div class="possession">
+          <EchoIcon class="icon" color="#E66000" v-show="player.possession" />
         </div>
         <div class="number">{{ player.number }}</div>
         <div class="name">{{ player.name }}</div>
@@ -49,11 +45,7 @@
         <div class="name">{{ player.name }}</div>
         <div class="number">{{ player.number }}</div>
         <div class="possession">
-          <EchoIcon
-            class="icon"
-            color="#488EE7"
-            v-show="player.possession"
-          ></EchoIcon>
+          <EchoIcon class="icon" color="#488EE7" v-show="player.possession" />
         </div>
         <div class="stats">
           <div class="stat">{{ player.stats.points }}</div>

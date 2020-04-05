@@ -175,6 +175,9 @@ export default class App extends Vue {
       case "round_over":
         break;
       case "post_match":
+        this.show.hud = true;
+        this.show.goal = false;
+        this.show.stats = true;
         break;
       case "round_start":
         this.show.hud = true;
