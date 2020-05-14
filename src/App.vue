@@ -109,7 +109,7 @@ export default class App extends Vue {
   fetch() {
     let call;
     if (process.env.NODE_ENV == "production")
-      call = axios.get("http://127.0.0.1/session", { timeout: 200 });
+      call = axios.get("http://127.0.0.1:6721/session", { timeout: 200 });
     else call = axios.get("/test-data.json");
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     call
