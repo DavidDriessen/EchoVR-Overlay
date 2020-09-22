@@ -11,7 +11,7 @@ app.listen(port, function() {
 const router = express.Router();
 router.get("/session", function(req, res) {
   axios
-    .get("http://127.0.0.1/session")
+    .get("http://127.0.0.1:6721/session")
     .then(response => {
       res.json(response.data);
     })
